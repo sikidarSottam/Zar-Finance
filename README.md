@@ -1,20 +1,52 @@
 # Zar Finance
 
-Zar Finance is a full-stack fintech and banking prototype built with a Spring Boot backend and a React frontend. The project models a modern digital banking experience with user authentication, account management, money transfers, password recovery, transactional notifications, and an auditor/admin dashboard.
+<div align="center">
 
-This repository is designed to showcase practical, end-to-end engineering work: secure backend APIs, role-based authorization, financial domain logic, transactional data modeling, and a polished customer-facing interface.
+[![Java](https://img.shields.io/badge/Java-21-ED8B00?logo=openjdk&logoColor=white)](https://www.java.com/)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.0.8-6DB33F?logo=springboot&logoColor=white)](https://spring.io/projects/spring-boot)
+[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-4169E1?logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![JWT](https://img.shields.io/badge/JWT-Authentication-000000?logo=jsonwebtokens&logoColor=white)](https://jwt.io/)
+
+</div>
+
+A full-stack fintech and banking prototype built with a Spring Boot backend and a React frontend. Zar Finance models a modern digital banking experience with authentication, account management, transfers, password recovery, notifications, and an admin/auditor dashboard.
+
+## Overview
+
+Zar Finance is designed to demonstrate realistic product and engineering work across the stack:
+
+- secure Java backend with JWT-based authentication
+- role-aware access control for customer, admin, and auditor users
+- financial workflows such as deposits, withdrawals, transfers, and balance updates
+- email-driven communication and account lifecycle notifications
+- audit and operational search capabilities
+- frontend and backend integration for a cohesive banking experience
+
+## Table of contents
+
+- [Why this project matters](#why-this-project-matters)
+- [Product overview](#product-overview)
+- [Architecture](#architecture)
+- [Technology stack](#technology-stack)
+- [Repository structure](#repository-structure)
+- [Roles and access model](#roles-and-access-model)
+- [Key user journeys](#key-user-journeys)
+- [Getting started](#getting-started)
+- [Documentation](#documentation)
+- [Project status](#project-status)
 
 ## Why this project matters
 
-This application demonstrates several recruiter-relevant capabilities:
+This project highlights several recruiter-relevant capabilities:
 
-- Secure Java backend with JWT-based authentication
-- Role-aware access control for customer, admin, and auditor users
-- Real financial workflows such as transfers, deposits, and balance updates
-- Notification-driven user communication via email templates
-- Auditing and operational search capabilities
-- Full-stack integration between API and UI
-- A realistic domain-model structure for a banking product
+- secure Java backend development with Spring Security
+- domain-driven banking logic and transactional rules
+- full-stack integration between API and UI
+- role-aware access control and operational tooling
+- notification workflows using email templates
+- realistic delivery of a fintech product prototype
 
 ## Product overview
 
@@ -23,43 +55,40 @@ Zar Finance allows users to:
 - register for an account
 - log in with email and password
 - manage profile information and profile picture upload
-- view account balances and account metadata
+- view account balances and metadata
 - review transaction history
 - transfer funds between accounts
 - recover and reset a password through an email-based flow
 - access admin or auditor views for operational lookup and monitoring
 
-The app intentionally mirrors a banking product workflow rather than a simple demo app, making it suitable as a portfolio project for backend, full-stack, and fintech-oriented roles.
+The app mirrors an end-to-end banking product workflow rather than a simple CRUD demo, making it suitable for backend, full-stack, and fintech-oriented portfolios.
 
 ## Architecture
 
-```text
-+-------------------+        HTTP/JSON        +----------------------+
-| React frontend    | ----------------------> | Spring Boot backend   |
-| Vite + TypeScript |                         | Java 21 + JPA + JWT  |
-+-------------------+                         +-----------+----------+
-                                                             |
-                                                             v
-                                                     PostgreSQL database
-                                                             |
-                                                             v
-                                                    Email templates / SMTP
+```mermaid
+flowchart LR
+    A[React Frontend\nVite + TypeScript] -->|HTTP / JSON| B[Spring Boot Backend\nJava 21 + JPA + JWT]
+    B --> C[PostgreSQL Database]
+    B --> D[SMTP / Email Templates]
+    B --> E[AWS S3 integration support]
 ```
 
 ## Technology stack
 
 ### Backend
+
 - Java 21
 - Spring Boot 4.0.8
 - Spring Security
 - Spring Data JPA
 - PostgreSQL
-- JWT (jjwt)
+- JWT via jjwt
 - Thymeleaf email templates
 - AWS SDK for S3
 - OpenAPI / Swagger UI support
 
 ### Frontend
+
 - React 19
 - TypeScript
 - Vite
@@ -91,7 +120,7 @@ zar-finance/
 └── .git/
 ```
 
-## Role model
+## Roles and access model
 
 The application includes a role-aware access model with role names such as:
 
@@ -104,14 +133,16 @@ The default registration flow assigns the CUSTOMER role when no role list is pro
 ## Key user journeys
 
 ### Customer journey
+
 - register a new account
-- get an automated savings account
+- receive an automated savings account
 - sign in and receive a JWT token
 - view profile, accounts, and transaction history
-- transfer funds to another account
-- recover account access via password reset flow
+- transfer funds between accounts
+- recover account access through the password-reset flow
 
 ### Operations journey
+
 - review aggregate platform numbers
 - search users by email
 - inspect account details
@@ -121,12 +152,13 @@ The default registration flow assigns the CUSTOMER role when no role list is pro
 ## Getting started
 
 ### Prerequisites
+
 - Java 21 or newer
 - Maven
 - Node.js and npm
 - PostgreSQL instance
 - SMTP-capable email configuration
-- A local backend runtime environment with the required service variables configured
+- a local backend runtime environment with the required service variables configured
 
 ### Local startup
 
@@ -153,18 +185,18 @@ http://localhost:5173
 
 4. Ensure the backend is running on the configured API port, which the frontend targets through its API client.
 
-## Backend and frontend documentation
+## Documentation
 
 - Backend documentation: [backend/README.md](backend/README.md)
 - Frontend documentation: [frontend/README.md](frontend/README.md)
 
-## Project status and honest note
+## Project status
 
-This is a strong fintech prototype and portfolio application, not a production-grade banking system. It demonstrates real product logic, security patterns, and full-stack API integration while intentionally keeping local development assumptions and configuration values aligned with a development environment.
+This is a strong fintech prototype and portfolio application, not a production-grade banking system. It demonstrates real product logic, security patterns, and full-stack API integration while keeping local development assumptions and configuration values aligned with a development environment.
 
 ## Screenshot highlights
 
-The frontend includes a screenshot gallery that captures the app’s live UI experience, including the login screen and transfer flow. These are included in the frontend documentation with proper relative references.
+The frontend includes a screenshot gallery that captures the app’s live UI experience, including the login and transfer flows. These are documented in detail in the frontend README with valid relative references.
 
 ---
 

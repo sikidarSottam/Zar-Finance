@@ -1,50 +1,84 @@
 # Zar Finance Frontend
 
-This frontend is the customer and operations interface for the Zar Finance banking application. It is built with React, TypeScript, and Vite, and it connects to the Spring Boot backend through a shared Axios API client. The interface supports account registration, sign-in, password recovery, customer account management, transfers, transaction review, and operational dashboard access.
+<div align="center">
+
+[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Vite](https://img.shields.io/badge/Vite-Frontend-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
+[![Axios](https://img.shields.io/badge/API-Axios-5A29E4?logo=axios&logoColor=white)](https://axios-http.com/)
+[![Router](https://img.shields.io/badge/Router-React%20Router-CA4245?logo=reactrouter&logoColor=white)](https://reactrouter.com/)
+
+</div>
+
+This frontend is the customer and operations interface for the Zar Finance banking application. It connects to the Spring Boot backend through a shared Axios API client and supports account registration, sign-in, password recovery, profile management, transfers, transaction review, and admin/auditor workflows.
 
 ## Overview
 
-The app uses a role-based front-end experience:
+The app uses a role-based experience:
 
-- CUSTOMER users can view their profile, accounts, transfer funds, and review transactions
-- ADMIN or AUDITOR users can access the dashboard for system metrics and record lookup
+- CUSTOMER users can view profiles, accounts, transfer funds, and review transactions
+- ADMIN or AUDITOR users can access system metrics and record lookup
 - unauthenticated users can register, log in, and recover a password
 
-## Frontend architecture
+## Table of contents
+
+- [Architecture](#architecture)
+- [Route structure](#route-structure)
+- [Main UI pages](#main-ui-pages)
+- [UI component map](#ui-component-map)
+- [API integration](#api-integration)
+- [Local setup](#local-setup)
+- [Screenshot gallery](#screenshot-gallery)
+- [Project structure](#project-structure)
+- [Build and quality checks](#build-and-quality-checks)
+
+## Architecture
 
 The app architecture is intentionally simple and clear:
 
 - App shell: global layout, routing, and navigation
-- Page components: each route handles a specific product workflow
+- page components: each route handles a product workflow
 - API service layer: central Axios client and helper methods
-- Protected route guards: enforce customer/admin/auditor restrictions
+- protected route guards: enforce customer/admin/auditor restrictions
+
+```mermaid
+flowchart LR
+    A[User Browser] --> B[React Router]
+    B --> C[Protected Route Guards]
+    C --> D[Page Components]
+    D --> E[Axios API Client]
+    E --> F[Spring Boot API]
+```
 
 ## Route structure
 
-The application routing setup is defined in App.tsx and includes these primary paths:
+The application routing setup is defined in `App.tsx` and includes these primary paths:
 
-- / and /home: landing page
-- /login: login page
-- /register: sign-up page
-- /forgot-password: password recovery request page
-- /reset-password: password reset page
-- /profile: authenticated customer profile
-- /update-profile: password change flow
-- /transactions: customer transaction history
-- /transfer: transfer flow
-- /auditor-dashboard: admin/auditor dashboard
-- /deposit: admin deposit workflow
-- *: not found route
+- `/` and `/home`: landing page
+- `/login`: login page
+- `/register`: sign-up page
+- `/forgot-password`: password recovery request page
+- `/reset-password`: password reset page
+- `/profile`: authenticated customer profile
+- `/update-profile`: password change flow
+- `/transactions`: customer transaction history
+- `/transfer`: transfer flow
+- `/auditor-dashboard`: admin/auditor dashboard
+- `/deposit`: admin deposit workflow
+- `*`: not found route
 
 ## Main UI pages
 
 ### Login
+
 The login experience is a standard email/password form. On success, the app stores the token and roles in local storage and redirects to the home page.
 
 ### Register
+
 The registration page collects name, email, phone number, and password, then calls the backend registration endpoint.
 
 ### Forgot password and reset password
+
 The app supports a password recovery flow:
 
 1. user enters email
@@ -52,6 +86,7 @@ The app supports a password recovery flow:
 3. user enters the code and new password on the reset screen
 
 ### Profile and settings
+
 The profile page allows:
 
 - viewing account information
@@ -60,6 +95,7 @@ The profile page allows:
 - changing the password
 
 ### Transfer flow
+
 The transfer page supports:
 
 - selecting a source account
@@ -69,6 +105,7 @@ The transfer page supports:
 - validating sufficient funds before submission
 
 ### Transactions
+
 The transactions page lets the user:
 
 - choose an account
@@ -77,6 +114,7 @@ The transactions page lets the user:
 - review transaction amounts and dates
 
 ### Auditor dashboard
+
 The dashboard exposes key operational views:
 
 - total users, accounts, and transactions
@@ -86,6 +124,7 @@ The dashboard exposes key operational views:
 - transaction queries by account
 
 ### Deposit workflow
+
 The deposit page is used by admin/auditor-level users to:
 
 - search for an account
@@ -96,20 +135,23 @@ The deposit page is used by admin/auditor-level users to:
 ## UI component map
 
 ### Navbar
+
 The navbar reads local storage state and renders links depending on auth state and user roles.
 
 ### Footer
+
 The footer contains branding and basic support contact information.
 
 ### Guards
+
 The route guards ensure the user is authorized before reaching protected screens:
 
-- CustomerRoute: allows the customer experience only
-- AuditorRoute: allows admin or auditor access
+- `CustomerRoute`: allows the customer experience only
+- `AuditorRoute`: allows admin or auditor access
 
 ## API integration
 
-The frontend uses a centralized Axios instance in services/api.ts.
+The frontend uses a centralized Axios instance in `services/api.ts`.
 
 Relevant responsibilities:
 
@@ -124,9 +166,10 @@ The client automatically attaches the JWT bearer token when one is stored in loc
 ## Local setup
 
 ### Prerequisites
+
 - Node.js and npm
 - a running backend API instance
-- access to the same local API host/port expected by the frontend client
+- access to the same local API host and port expected by the frontend client
 
 ### Install
 
@@ -153,16 +196,22 @@ http://localhost:5173
 These screenshots capture the actual application experience in the current workspace and help validate the implementation quality.
 
 ### Login screen
-![Login screen](./screenshots/Screenshot%20(151).png)
 
-Caption: customer login page with the Zar Finance branding and account authentication form.
+<a href="./screenshots/Screenshot%20(151).png" target="_blank">
+  <img src="./screenshots/Screenshot%20(151).png" alt="Login screen" width="900" />
+</a>
+
+Caption: customer login page with Zar Finance branding and account authentication controls.
 
 ### Transfer screen
-![Transfer screen](./screenshots/Screenshot%20(160).png)
 
-Caption: transfer workflow with source account selection, destination verification, and transfer guidelines.
+<a href="./screenshots/Screenshot%20(160).png" target="_blank">
+  <img src="./screenshots/Screenshot%20(160).png" alt="Transfer screen" width="900" />
+</a>
 
-Additional screenshots in the same folder capture the register flow, profile page, transaction history, and auditor dashboard.
+Caption: transfer workflow with source account selection, destination verification, and transfer guidance.
+
+Additional screenshots in the same folder capture the registration flow, profile page, transaction history, and auditor dashboard.
 
 ## Project structure
 
